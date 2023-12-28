@@ -1,0 +1,28 @@
+{
+  "name": "wpt-test",
+  "version": "1.0.0",
+  "copyright": "Copyright 2023 Ayogo Health Inc.",
+  "license": "MIT AND BSD-3-Clause",
+  "homepage": "https://github.com/AyogoHealth/wpt-test#readme",
+  "author": "Ayogo Health Inc.",
+  "contributors": [
+    "Darryl Pogue <darryl@dpogue.ca>",
+    "Ian Suda <iansuda@gmail.com>"
+  ],
+  "description": "NodeJS test runner for web-platform-test testharness tests",
+  "main": "lib/testrunner.js",
+  "bin": "wpt-test-cli.js",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://git@github.com/AyogoHealth/wpt-test.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AyogoHealth/wpt-test/issues"
+  },
+  "dependencies": {
+    "path-is-inside": "^1.0.2",
+    "serve-handler": "^6.1.5",
+    "webdriver": "^8.24.12"
+  }
+}
