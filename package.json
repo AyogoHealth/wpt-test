@@ -10,7 +10,7 @@
     "Ian Suda <iansuda@gmail.com>"
   ],
   "description": "NodeJS test runner for web-platform-test testharness tests",
-  "main": "lib/testrunner.js",
+  "main": "lib/runner.js",
   "bin": "wpt-test-cli.js",
   "type": "module",
   "repository": {

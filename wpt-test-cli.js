@@ -24,7 +24,7 @@ import process from 'node:process';
 import reporters from "node:test/reporters";
 import { parseArgs } from "node:util";
 import { runServer } from "./lib/wpt_server.js";
-import run from "./lib/testrunner.js";
+import run from "./lib/runner.js";
 
 const flagOptions = {
   help: {
@@ -54,6 +54,7 @@ const opts = {};
 const args = parseArgs({ strict: true, allowPositionals: true, options: flagOptions });
 
 if ("help" in args.values) {
+  console.log("Usage: wpt-test [OPTIONS] TEST_DIRECTORY");
   console.log("TODO: Write help output");
   process.exit(0);
 }
@@ -80,11 +81,9 @@ if ("serve" in args.values || "server" in args.values) {
   process.on("SIGTERM", shutdown)
   process.on("SIGQUIT", shutdown)
 } else {
-  const testcases = [
-      "http://localhost:3000/test/test.html"
-  ];
+  const testdir = args.positionals[0] || "test";
 
-  const test_stream = run(testcases, opts);
+  const test_stream = run(testdir, opts);
   test_stream.compose(testReporter).pipe(process.stdout);
 
   await test_stream.waitUntilDone();
