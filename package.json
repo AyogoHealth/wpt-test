@@ -21,8 +21,8 @@
     "url": "https://github.com/AyogoHealth/wpt-test/issues"
   },
   "dependencies": {
+    "mime-types": "^2.1.35",
     "path-is-inside": "^1.0.2",
-    "serve-handler": "^6.1.5",
     "webdriver": "^8.24.12"
   }
 }
