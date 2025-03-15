@@ -14,36 +14,6 @@
  * parameters they are called with see testharness.js
  */
 
-window.__testharness__done__ = new Promise(function(resolve) {
-  window.__testharness__done_callback__ = resolve;
-});
-
-function dump_test_results(tests, status) {
-    var results_element = document.createElement("script");
-    results_element.type = "text/json";
-    results_element.id = "__testharness__results__";
-    var test_results = tests.map(function(x) {
-        return {name:x.name, status:x.status, message:x.message, stack:x.stack}
-    });
-    var data = {test:window.location.href,
-                tests:test_results,
-                status: status.status,
-                message: status.message,
-                stack: status.stack};
-    results_element.textContent = JSON.stringify(data);
-
-    // To avoid a HierarchyRequestError with XML documents, ensure that 'results_element'
-    // is inserted at a location that results in a valid document.
-    var parent = document.body
-        ? document.body                 // <body> is required in XHTML documents
-        : document.documentElement;     // fallback for optional <body> in HTML5, SVG, etc.
-
-    parent.appendChild(results_element);
-    window.__testharness__done_callback__(data);
-}
-
-add_completion_callback(dump_test_results);
-
 /* If the parent window has a testharness_properties object,
  * we use this to provide the test settings. This is used by the
  * default in-browser runner to configure the timeout and the
@@ -59,4 +29,20 @@ try {
     }
 } catch (e) {
 }
+
+window.__testharness__done__ = new Promise(function(resolve) {
+  window.__testharness__done_callback__ = resolve;
+});
+
+add_completion_callback(function(tests, status) {
+    var test_results = tests.map(function(x) {
+        return {name:x.name, status:x.status, message:x.message, stack:x.stack}
+    });
+    var data = {test:window.location.href,
+                tests:test_results,
+                status: status.status,
+                message: status.message,
+                stack: status.stack};
+    window.__testharness__done_callback__(data);
+});
 // vim: set expandtab shiftwidth=4 tabstop=4:
