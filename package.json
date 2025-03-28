@@ -23,7 +23,7 @@
   "dependencies": {
     "mime-types": "^2.1.35",
     "path-is-inside": "^1.0.2",
-    "webdriver": "^8.24.12"
+    "webdriver": "^9.12.2"
   },
   "engines": {
     "node": ">= 20.1.0"
