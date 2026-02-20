@@ -87,6 +87,11 @@ if ("serve" in args.values || "server" in args.values) {
 
   await test_stream.waitUntilDone();
 
+  if (process.platform == "win32") {
+    // Workaround for https://github.com/nodejs/node/issues/56645
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
   setImmediate(() => {
     console.log("");
     process.exit(test_stream.status);
