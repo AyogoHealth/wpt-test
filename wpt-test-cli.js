@@ -47,6 +47,12 @@ const flagOptions = {
   },
   reporter: {
     type: "string"
+  },
+  driverHostname: {
+    type: "string"
+  },
+  driverPort: {
+    type: "string"
   }
 };
 
@@ -64,6 +70,11 @@ if ("verbose" in args.values) {
 
 if ("browser" in args.values) {
   opts.browser = args.values.browser;
+}
+
+if ("driverHostname" in args.values && "driverPort" in args.values) {
+  opts.driverHostname = args.values.driverHostname;
+  opts.driverPort = parseInt(args.values.driverPort, 10);
 }
 
 let testReporter = reporters.spec;
@@ -122,9 +133,12 @@ function usage() {
   console.log("By default, tests will run against a temporary local server in Chrome.");
   console.log("");
   console.log(bold("FLAGS"));
-  console.log("  -h, --help             Show usage");
-  console.log("  -v, --verbose          Print additional debug logging");
-  console.log("  -s, --serve            Run test server for manual debugging");
-  console.log("      --browser=BROWSER  Use the specified browser for testing");
-  console.log("      --reporter=TYPE    Print results using the specified reporter");
+  console.log("  -h, --help                 Show usage");
+  console.log("  -v, --verbose              Print additional debug logging");
+  console.log("  -s, --serve                Run test server for manual debugging");
+  console.log("      --browser=BROWSER      Use the specified browser for testing");
+  console.log("      --reporter=TYPE        Print results using the specified reporter");
+  console.log("")
+  console.log("      --driverHostname=HOST  Specify the hostname of a WebDriver server (advanced)");
+  console.log("      --driverPort=PORT      Specify the port number of a WebDriver server (advanced)");
 }
