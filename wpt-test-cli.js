@@ -22,7 +22,7 @@
 
 import process from 'node:process';
 import reporters from "node:test/reporters";
-import { parseArgs } from "node:util";
+import util from "node:util";
 import { runServer } from "./lib/wpt_server.js";
 import run from "./lib/runner.js";
 
@@ -51,7 +51,7 @@ const flagOptions = {
 };
 
 const opts = {};
-const args = parseArgs({ strict: true, allowPositionals: true, options: flagOptions });
+const args = util.parseArgs({ strict: true, allowPositionals: true, options: flagOptions });
 
 if ("help" in args.values) {
   usage();
@@ -87,6 +87,11 @@ if ("serve" in args.values || "server" in args.values) {
 
   await test_stream.waitUntilDone();
 
+  if (process.platform == "win32") {
+    // Workaround for https://github.com/nodejs/node/issues/56645
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
   setImmediate(() => {
     console.log("");
     process.exit(test_stream.status);
@@ -96,7 +101,9 @@ if ("serve" in args.values || "server" in args.values) {
 // Helper functions below here ----------------------------------------------v
 
 function bold(text) {
-  if (process.stdout?.hasColors?.()) {
+  if (util.hasOwnProperty("styleText")) {
+    return util.styleText("bold", text);
+  } else if (process.stdout?.hasColors?.()) {
     return `\u001b[1m${text}\u001b[22m`;
   } else {
     return text;

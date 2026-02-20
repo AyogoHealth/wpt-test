@@ -27,5 +27,8 @@
   },
   "engines": {
     "node": ">= 20.1.0"
+  },
+  "scripts": {
+    "test": "node wpt-test-cli.js test"
   }
 }
